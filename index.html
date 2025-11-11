@@ -9,48 +9,60 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-  :root{
-    --accent:#0FA958;
-    --bg:#0b0b0b;
-    --fg:#f7f7f7;
-    --brand-head:"Playfair Display",ui-serif,serif;
-    --brand-body:Inter,ui-sans-serif,system-ui;
-    --reel-height:1.25em;
-    --items:14;               /* number of words */
-    --duration:56s;           /* 14 words × 4 seconds = 56s */
-  }
-  html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);
-    font-family:var(--brand-body);display:grid;place-items:center;}
-  h1{font-family:var(--brand-head);font-size:clamp(36px,6.5vw,80px);margin:0;}
-  .tagline{
-    margin-top:1rem;
-    font-size:clamp(24px,5vw,48px);
-    font-weight:700;
-    display:flex;gap:.5ch;justify-content:center;
-    line-height:var(--reel-height);white-space:nowrap;
-  }
-  .static{opacity:.95;}
-  .reel{
-    position:relative;height:var(--reel-height);overflow:hidden;
-    display:inline-grid;align-items:start;min-width:8ch;
-    padding:.35rem .55rem;border-radius:.6rem;
-    border:1px solid rgba(255,255,255,.1);
-    background:rgba(255,255,255,.03);
-    box-shadow:0 0 24px rgba(15,169,88,.25);
-  }
-  .reel::before,.reel::after{
-    content:"";position:absolute;left:0;right:0;height:50%;
-    pointer-events:none;
-  }
-  .reel::before{top:0;background:linear-gradient(180deg,rgba(0,0,0,.6),transparent);}
-  .reel::after{bottom:0;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent);}
-  .words{display:block;animation:slot var(--duration) cubic-bezier(0.7,0,0.3,1) infinite;}
-  .words span{display:block;height:var(--reel-height);color:var(--accent);}
-  @keyframes slot{
-    0%{transform:translateY(0);}
-    100%{transform:translateY(calc(var(--items)*-100%));}
-  }
-  footer{margin-top:2rem;opacity:.7;font-size:.9rem;}
+:root{
+  --accent:#0FA958;
+  --bg:#0b0b0b;
+  --fg:#f7f7f7;
+  --brand-head:"Playfair Display",ui-serif,serif;
+  --brand-body:Inter,ui-sans-serif,system-ui;
+  --reel-height:1.25em;
+  --speed:8s; /* adjust speed — smaller = faster */
+}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);
+  font-family:var(--brand-body);display:grid;place-items:center;}
+h1{font-family:var(--brand-head);font-size:clamp(36px,6.5vw,80px);margin:0;}
+.tagline{
+  margin-top:1rem;
+  font-size:clamp(24px,5vw,48px);
+  font-weight:700;
+  display:flex;gap:.5ch;justify-content:center;
+  line-height:var(--reel-height);white-space:nowrap;
+}
+.static{opacity:.95;}
+.reel{
+  position:relative;height:var(--reel-height);overflow:hidden;
+  display:inline-grid;align-items:start;min-width:8ch;
+  padding:.35rem .55rem;border-radius:.6rem;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.03);
+  box-shadow:0 0 24px rgba(15,169,88,.25);
+}
+.reel::before,.reel::after{
+  content:"";position:absolute;left:0;right:0;height:50%;
+  pointer-events:none;
+}
+.reel::before{top:0;background:linear-gradient(180deg,rgba(0,0,0,.6),transparent);}
+.reel::after{bottom:0;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent);}
+
+/* Duplicate the words block for seamless looping */
+.words{
+  display:flex;
+  flex-direction:column;
+  animation:scroll var(--speed) linear infinite;
+}
+.words span{
+  display:block;
+  height:var(--reel-height);
+  color:var(--accent);
+}
+
+/* Continuous scrolling loop */
+@keyframes scroll{
+  0% {transform:translateY(0);}
+  100% {transform:translateY(-50%);}
+}
+
+footer{margin-top:2rem;opacity:.7;font-size:.9rem;}
 </style>
 </head>
 <body>
@@ -59,7 +71,7 @@
     <div class="tagline">
       <span class="static">Jardín is</span>
       <span class="reel">
-        <span class="words">
+        <div class="words">
           <span>Love</span>
           <span>Belonging</span>
           <span>Connection</span>
@@ -70,16 +82,4 @@
           <span>Presence</span>
           <span>Freedom</span>
           <span>Innovation</span>
-          <span>Excellence</span>
-          <span>Luxury</span>
-          <span>Sexy</span>
-          <span>Fun</span>
-          <!-- repeat first word for seamless loop -->
-          <span>Love</span>
-        </span>
-      </span>
-    </div>
-    <footer>© Jardín — all rights reserved</footer>
-  </main>
-</body>
-</html>
+          <span>Excel
