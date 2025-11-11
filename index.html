@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Jardín</title>
 
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -16,13 +17,27 @@
   --brand-head:"Playfair Display",serif;
   --brand-body:Inter,ui-sans-serif,system-ui;
   --reel-height:1.25em;
-  --speed:24s; /* adjust speed: lower = faster */
+  --speed:24s; /* speed of reel loop */
 }
-
 html,body{
   height:100%;margin:0;background:var(--bg);color:var(--fg);
   font-family:var(--brand-body);
-  display:grid;place-items:center;text-align:center;
+  display:grid;place-items:center;text-align:center;overflow:hidden;
+}
+
+/* Anniversary message */
+.anniversary{
+  font-family:var(--brand-head);
+  font-size:clamp(26px,4.5vw,52px);
+  color:var(--accent);
+  text-shadow:0 0 10px rgba(15,169,88,.5);
+  margin-bottom:1.5rem;
+  opacity:0;
+  transform:translateY(20px);
+  animation:fadeSlideIn 1.6s ease forwards .6s;
+}
+@keyframes fadeSlideIn{
+  to{opacity:1;transform:translateY(0);}
 }
 
 h1{
@@ -36,6 +51,7 @@ h1{
   opacity:.7;
 }
 
+/* Slot tagline */
 .tagline{
   font-size:clamp(24px,5vw,48px);
   font-weight:700;
@@ -46,9 +62,7 @@ h1{
   line-height:var(--reel-height);
   white-space:nowrap;
 }
-
 .static{opacity:.9;}
-
 .reel{
   position:relative;
   height:var(--reel-height);
@@ -59,45 +73,27 @@ h1{
   border-radius:.6rem;
   border:1px solid rgba(255,255,255,.1);
   background:rgba(255,255,255,.03);
-  box-shadow:
-    0 0 24px rgba(15,169,88,.25),
-    0 0 60px rgba(15,169,88,.1);
+  box-shadow:0 0 24px rgba(15,169,88,.25),0 0 60px rgba(15,169,88,.1);
 }
-
 .reel::before,.reel::after{
-  content:"";
-  position:absolute;left:0;right:0;height:50%;
-  pointer-events:none;
+  content:"";position:absolute;left:0;right:0;height:50%;pointer-events:none;
 }
 .reel::before{top:0;background:linear-gradient(180deg,rgba(0,0,0,.7),transparent);}
 .reel::after{bottom:0;background:linear-gradient(0deg,rgba(0,0,0,.7),transparent);}
-
-/* Two stacked lists scrolling upward continuously */
 .scroll{
-  display:flex;
-  flex-direction:column;
-  animation:scroll var(--speed) linear infinite;
+  display:flex;flex-direction:column;animation:scroll var(--speed) linear infinite;
 }
-.scroll span{
-  display:block;
-  height:var(--reel-height);
-  color:var(--accent);
-}
-
+.scroll span{display:block;height:var(--reel-height);color:var(--accent);}
 @keyframes scroll{
   0%{transform:translateY(0);}
   100%{transform:translateY(-50%);}
 }
-
-footer{
-  margin-top:2rem;
-  opacity:.6;
-  font-size:.9rem;
-}
+footer{margin-top:2rem;opacity:.6;font-size:.9rem;}
 </style>
 </head>
 <body>
   <main>
+    <div class="anniversary">Happy 9th Anniversary, Adam.</div>
     <h1>Jardín</h1>
     <p class="subtitle">Where nature becomes luxury.</p>
 
@@ -105,41 +101,47 @@ footer{
       <span class="static">Jardín is</span>
       <span class="reel">
         <div class="scroll">
-          <!-- First list -->
-          <span>Love</span>
-          <span>Belonging</span>
-          <span>Connection</span>
-          <span>Peace</span>
-          <span>Balance</span>
-          <span>Wellness</span>
-          <span>Healing</span>
-          <span>Presence</span>
-          <span>Freedom</span>
-          <span>Innovation</span>
-          <span>Excellence</span>
-          <span>Luxury</span>
-          <span>Sexy</span>
-          <span>Fun</span>
-          <!-- Duplicate for seamless loop -->
-          <span>Love</span>
-          <span>Belonging</span>
-          <span>Connection</span>
-          <span>Peace</span>
-          <span>Balance</span>
-          <span>Wellness</span>
-          <span>Healing</span>
-          <span>Presence</span>
-          <span>Freedom</span>
-          <span>Innovation</span>
-          <span>Excellence</span>
-          <span>Luxury</span>
-          <span>Sexy</span>
-          <span>Fun</span>
+          <!-- Word set duplicated for seamless loop -->
+          <span>Love</span><span>Belonging</span><span>Connection</span>
+          <span>Peace</span><span>Balance</span><span>Wellness</span>
+          <span>Healing</span><span>Presence</span><span>Freedom</span>
+          <span>Innovation</span><span>Excellence</span><span>Luxury</span>
+          <span>Sexy</span><span>Fun</span>
+          <span>Love</span><span>Belonging</span><span>Connection</span>
+          <span>Peace</span><span>Balance</span><span>Wellness</span>
+          <span>Healing</span><span>Presence</span><span>Freedom</span>
+          <span>Innovation</span><span>Excellence</span><span>Luxury</span>
+          <span>Sexy</span><span>Fun</span>
         </div>
       </span>
     </div>
-
     <footer>© Jardín — all rights reserved</footer>
   </main>
+
+  <!-- Confetti Script -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script>
+    // launch confetti burst on page load
+    const duration = 2 * 1000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      confetti({
+        particleCount: 5,
+        angle: 60,
+        spread: 70,
+        origin: { x: 0 }
+      });
+      confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 70,
+        origin: { x: 1 }
+      });
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
+  </script>
 </body>
 </html>
