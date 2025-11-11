@@ -11,67 +11,101 @@
 <style>
 :root{
   --accent:#0FA958;
-  --bg:#0b0b0b;
+  --bg:#000;
   --fg:#f7f7f7;
-  --brand-head:"Playfair Display",ui-serif,serif;
+  --brand-head:"Playfair Display",serif;
   --brand-body:Inter,ui-sans-serif,system-ui;
   --reel-height:1.25em;
-  --speed:8s; /* adjust speed — smaller = faster */
+  --speed:24s; /* adjust speed: lower = faster */
 }
-html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);
-  font-family:var(--brand-body);display:grid;place-items:center;}
-h1{font-family:var(--brand-head);font-size:clamp(36px,6.5vw,80px);margin:0;}
+
+html,body{
+  height:100%;margin:0;background:var(--bg);color:var(--fg);
+  font-family:var(--brand-body);
+  display:grid;place-items:center;text-align:center;
+}
+
+h1{
+  font-family:var(--brand-head);
+  font-size:clamp(36px,6.5vw,80px);
+  margin:0;
+}
+.subtitle{
+  margin:.25rem 0 2rem 0;
+  font-size:clamp(14px,2.6vw,18px);
+  opacity:.7;
+}
+
 .tagline{
-  margin-top:1rem;
   font-size:clamp(24px,5vw,48px);
   font-weight:700;
-  display:flex;gap:.5ch;justify-content:center;
-  line-height:var(--reel-height);white-space:nowrap;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:.5ch;
+  line-height:var(--reel-height);
+  white-space:nowrap;
 }
-.static{opacity:.95;}
+
+.static{opacity:.9;}
+
 .reel{
-  position:relative;height:var(--reel-height);overflow:hidden;
-  display:inline-grid;align-items:start;min-width:8ch;
-  padding:.35rem .55rem;border-radius:.6rem;
+  position:relative;
+  height:var(--reel-height);
+  overflow:hidden;
+  display:inline-block;
+  min-width:8ch;
+  padding:.35rem .55rem;
+  border-radius:.6rem;
   border:1px solid rgba(255,255,255,.1);
   background:rgba(255,255,255,.03);
-  box-shadow:0 0 24px rgba(15,169,88,.25);
+  box-shadow:
+    0 0 24px rgba(15,169,88,.25),
+    0 0 60px rgba(15,169,88,.1);
 }
+
 .reel::before,.reel::after{
-  content:"";position:absolute;left:0;right:0;height:50%;
+  content:"";
+  position:absolute;left:0;right:0;height:50%;
   pointer-events:none;
 }
-.reel::before{top:0;background:linear-gradient(180deg,rgba(0,0,0,.6),transparent);}
-.reel::after{bottom:0;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent);}
+.reel::before{top:0;background:linear-gradient(180deg,rgba(0,0,0,.7),transparent);}
+.reel::after{bottom:0;background:linear-gradient(0deg,rgba(0,0,0,.7),transparent);}
 
-/* Duplicate the words block for seamless looping */
-.words{
+/* Two stacked lists scrolling upward continuously */
+.scroll{
   display:flex;
   flex-direction:column;
   animation:scroll var(--speed) linear infinite;
 }
-.words span{
+.scroll span{
   display:block;
   height:var(--reel-height);
   color:var(--accent);
 }
 
-/* Continuous scrolling loop */
 @keyframes scroll{
-  0% {transform:translateY(0);}
-  100% {transform:translateY(-50%);}
+  0%{transform:translateY(0);}
+  100%{transform:translateY(-50%);}
 }
 
-footer{margin-top:2rem;opacity:.7;font-size:.9rem;}
+footer{
+  margin-top:2rem;
+  opacity:.6;
+  font-size:.9rem;
+}
 </style>
 </head>
 <body>
-  <main style="text-align:center;">
+  <main>
     <h1>Jardín</h1>
+    <p class="subtitle">Where nature becomes luxury.</p>
+
     <div class="tagline">
       <span class="static">Jardín is</span>
       <span class="reel">
-        <div class="words">
+        <div class="scroll">
+          <!-- First list -->
           <span>Love</span>
           <span>Belonging</span>
           <span>Connection</span>
@@ -86,8 +120,7 @@ footer{margin-top:2rem;opacity:.7;font-size:.9rem;}
           <span>Luxury</span>
           <span>Sexy</span>
           <span>Fun</span>
-
-          <!-- duplicate list for seamless loop -->
+          <!-- Duplicate for seamless loop -->
           <span>Love</span>
           <span>Belonging</span>
           <span>Connection</span>
@@ -105,6 +138,7 @@ footer{margin-top:2rem;opacity:.7;font-size:.9rem;}
         </div>
       </span>
     </div>
+
     <footer>© Jardín — all rights reserved</footer>
   </main>
 </body>
