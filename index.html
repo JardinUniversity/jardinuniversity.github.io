@@ -1,106 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jardín</title>
-  <style>
-    :root{
-      --bg:#0b0b0b;
-      --fg:#f5f5f5;
-      --accent:#9be18c; /* tweak to your brand green later */
-      --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
-      --reel-height:1.2em;        /* line height of the reel */
-      --items:14;                  /* number of rotating words */
-      --duration:24s;              /* total cycle time */
-    }
-    html,body{height:100%}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--fg);
-      font-family:var(--font);
-      display:grid;
-      place-items:center;
-    }
-    .wrap{
-      text-align:center;
-      padding:4rem 1.25rem;
-    }
-    h1{
-      font-size:clamp(28px,6vw,64px);
-      font-weight:700;
-      letter-spacing:.2px;
-      margin:0 0 .75rem 0;
-    }
-    .tagline{
-      font-size:clamp(22px,4.2vw,44px);
-      font-weight:600;
-      display:flex;
-      gap:.4ch;
-      justify-content:center;
-      align-items:flex-start;
-      line-height:var(--reel-height);
-      white-space:nowrap;
-    }
-    .static{
-      opacity:.9;
-    }
-    .reel{
-      position:relative;
-      height:var(--reel-height);
-      overflow:hidden;
-      display:inline-grid;
-      align-items:start;
-      min-width:6ch; /* keeps layout stable between short/long words */
-    }
-    .words{
-      display:block;
-      animation:slot var(--duration) steps(var(--items)) infinite;
-      will-change:transform;
-    }
-    .words span{
-      display:block;
-      height:var(--reel-height);
-      color:var(--accent);
-    }
-    /* Slot-style vertical roll (14 words = translateY(-1400%)) */
-    @keyframes slot{
-      from{ transform: translateY(0%); }
-      to  { transform: translateY(calc(var(--items) * -100%)); }
-    }
-    /* Pause on hover/focus for accessibility */
-    .reel:focus-within .words,
-    .reel:hover .words{ animation-play-state:paused; }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jardín</title>
 
-    /* Reduced motion preference */
-    @media (prefers-reduced-motion: reduce){
-      .words{ animation: none; }
-      .words span{ display:none; }
-      .words span:first-child{ display:block; }
-    }
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    /* Small helper button to skip animation for keyboard/AT users */
-    .sr-skip{
-      position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
-    }
-    .sr-skip:focus{
-      position:static; width:auto; height:auto; padding:.5rem .75rem;
-      background:#1f1f1f; border:1px solid #333; border-radius:.5rem; margin-top:1rem;
-    }
-
-    footer{
-      margin-top:2rem; opacity:.6; font-size:.95rem;
-    }
-  </style>
+<style>
+  :root{
+    --accent:#0FA958;
+    --bg:#0b0b0b;
+    --fg:#f7f7f7;
+    --brand-head:"Playfair Display",ui-serif,serif;
+    --brand-body:Inter,ui-sans-serif,system-ui;
+    --reel-height:1.25em;
+    --items:14;               /* number of words */
+    --duration:56s;           /* 14 words × 4 seconds = 56s */
+  }
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);
+    font-family:var(--brand-body);display:grid;place-items:center;}
+  h1{font-family:var(--brand-head);font-size:clamp(36px,6.5vw,80px);margin:0;}
+  .tagline{
+    margin-top:1rem;
+    font-size:clamp(24px,5vw,48px);
+    font-weight:700;
+    display:flex;gap:.5ch;justify-content:center;
+    line-height:var(--reel-height);white-space:nowrap;
+  }
+  .static{opacity:.95;}
+  .reel{
+    position:relative;height:var(--reel-height);overflow:hidden;
+    display:inline-grid;align-items:start;min-width:8ch;
+    padding:.35rem .55rem;border-radius:.6rem;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.03);
+    box-shadow:0 0 24px rgba(15,169,88,.25);
+  }
+  .reel::before,.reel::after{
+    content:"";position:absolute;left:0;right:0;height:50%;
+    pointer-events:none;
+  }
+  .reel::before{top:0;background:linear-gradient(180deg,rgba(0,0,0,.6),transparent);}
+  .reel::after{bottom:0;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent);}
+  .words{display:block;animation:slot var(--duration) cubic-bezier(0.7,0,0.3,1) infinite;}
+  .words span{display:block;height:var(--reel-height);color:var(--accent);}
+  @keyframes slot{
+    0%{transform:translateY(0);}
+    100%{transform:translateY(calc(var(--items)*-100%));}
+  }
+  footer{margin-top:2rem;opacity:.7;font-size:.9rem;}
+</style>
 </head>
 <body>
-  <main class="wrap">
+  <main style="text-align:center;">
     <h1>Jardín</h1>
-
-    <div class="tagline" aria-live="polite">
+    <div class="tagline">
       <span class="static">Jardín is</span>
-      <span class="reel" role="img" aria-label="slot machine word rotation">
+      <span class="reel">
         <span class="words">
           <span>Love</span>
           <span>Belonging</span>
@@ -116,14 +74,11 @@
           <span>Luxury</span>
           <span>Sexy</span>
           <span>Fun</span>
+          <!-- repeat first word for seamless loop -->
+          <span>Love</span>
         </span>
-        <!-- Keyboard “skip animation” link (becomes visible on focus) -->
-        <a class="sr-skip" href="#" onclick="document.querySelector('.words').style.animation='none';return false;">
-          Stop animation
-        </a>
       </span>
     </div>
-
     <footer>© Jardín — all rights reserved</footer>
   </main>
 </body>
